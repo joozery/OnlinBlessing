@@ -1,33 +1,40 @@
-import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import bgImage from "./assets/bg.jpg"; // ✅ import รูปภาพพื้นหลัง
 
 export default function BlessList({ blessings }) {
   if (!blessings.length) {
     return (
-      <div className="text-center text-gray-500 font-prompt mt-10">
+      <div className="text-center text-gray-400 font-prompt mt-10 text-lg">
         📭 ยังไม่มีคำอวยพรในตอนนี้
       </div>
     );
   }
 
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 font-prompt">
+    <div
+      className="min-h-screen py-10 px-4 space-y-10 font-prompt bg-cover bg-center"
+      style={{ backgroundImage: `url(${bgImage})` }} // ✅ ใช้ background จาก import
+    >
       {blessings.map((b) => (
         <div
           key={b.id}
-          className="bg-white border border-pink-200 rounded-xl shadow-md hover:shadow-lg transition duration-200 overflow-hidden"
+          className="bg-white/80 backdrop-blur-md border border-rose-200 rounded-2xl shadow-lg p-6 flex flex-row items-center gap-6 max-w-5xl mx-auto"
         >
-          <img
-            src={b.imageUrl}
-            alt="คำอวยพร"
-            className="w-full h-48 object-cover"
-          />
-          <div className="p-4 text-center">
-            <h3 className="text-lg font-semibold text-pink-700 mb-1 flex justify-center items-center gap-2">
-              <FaHeart className="text-pink-400" />
+          <div className="rotate-[-2deg] shrink-0">
+            <img
+              src={b.imageUrl}
+              alt="รูปอวยพร"
+              className="w-52 h-72 object-cover rounded-xl border-4 border-white shadow-md"
+            />
+          </div>
+          <div className="flex-1 bg-white/90 rounded-xl p-5 shadow-inner">
+            <p className="text-gray-800 text-[17px] leading-relaxed mb-3">
+              {b.message}
+            </p>
+            <p className="text-right text-rose-600 font-semibold flex justify-end items-center gap-2 text-sm">
+              <FaHeart className="text-rose-400" />
               {b.name}
-            </h3>
-            <p className="text-gray-700">{b.message}</p>
+            </p>
           </div>
         </div>
       ))}
